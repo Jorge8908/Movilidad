@@ -1,0 +1,11 @@
+//uso de las bibliotecas express y mongoose
+{
+	"name":"APIRest",
+	"version":"0.0.1",
+	"descripcion":"API Rest con MongoDB",
+	"main":"server.js",
+	"dependencies":{
+		"express":"latest",
+		"mongoose":"latest"
+	}
+}
