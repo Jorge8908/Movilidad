@@ -271,7 +271,8 @@ class TwitterAPIExchange
             CURLOPT_HEADER => false,
             CURLOPT_URL => $this->url,
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_TIMEOUT => 10,
+            CURLOPT_TIMEOUT => 100,
+            CURLOPT_SSL_VERIFYPEER => false,//para correrlo en localhost
         ) + $curlOptions;
 
         if (!is_null($postfields))
