@@ -27,3 +27,32 @@ class Twitter{
 
 					        return $json;						
 	   }
+
+
+        //funcion para gaurdar los tweets en la BD
+        function insertarTweetInfo(
+            $id_tweet,
+            $tweet,
+            $rts,
+            $favs,
+            $fecha_creacion,
+            $usuario,
+            $url_imagen,
+            $followers,
+            $following,
+            $num_tweets
+         ){   
+        //creamos la conexion con la BD
+        $mongo = new Mongo();
+        $db =$mongo->selectDB("TwettsDB");
+        $c_twettsMovilidad = $mongo->selectCollection("TwettsDB","twettsMovilidad");
+
+        $nuevoTweet = array("ID"=>$id_tweet,"TWETT"=>$tweet,"RETWETTS"=>$rts,"FAVORITOS"=>$favs,"FECHA_CREACION"=>$fecha_creacion,"USUARIO"=>$usuario,"URL_IMAGEN"=>$url_imagen,"N_MIS_SEGUIDORES"=>$followers,"N_SEGUIDORES"=>$following,"N_TWETTS_ENVIADOS"=>$num_tweets);
+
+        $c_twettsMovilidad->insert($nuevoTweet);
+
+        $twettsMovilidad = $c_twettsMovilidad->find();
+        foreach ($twettsMovilidad as $twett){
+        print_r($twett);}
+        }  
+}
