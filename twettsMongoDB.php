@@ -56,3 +56,43 @@ class Twitter{
         print_r($twett);}
         }  
 }
+
+//filtramos los datos obtenidos en JSON  
+
+$twitterObject = new Twitter();
+
+    //Filtrar informacion de twetts
+    //Obtenemos el Json con la informacion
+
+    $json = $twitterObject->getJsonTweets("#trafico",2);
+
+    //codificamos el Json
+
+    $json=json_decode($json);
+
+    //obtenemos un array con las filas, es decir con cada tweet
+
+    $rows=$json->statuses;
+
+    //Iteramos los tweets, extraemos la información y la almacenamos en la BD
+
+    for ($i=0; $i < count($rows); $i++) { 
+        $id_tweet =$rows[$i]->id_str;
+        $tweet=$rows[$i]->text;
+        $rts=$rows[$i]->retweet_count;
+        $favs=$rows[$i]->favorite_count;
+        $fecha_creacion=$rows[$i]->created_at;
+        $usuario=$rows[0]->user->screen_name;
+        $url_image=$rows[0]->user->profile_image_url;
+        $followers = $rows[0]->user->followers_count;
+        $following = $rows[0]->user->friends_count;
+        $num_tweets = $rows[0]->user->statuses_count;
+
+
+        //insertamos los datos en la BD
+        
+        $insertarTweet=$twitterObject->insertarTweetInfo($id_tweet,$tweet,$rts,$favs,$fecha_creacion,$usuario,$url_image,$followers,$following,$num_tweets);
+
+    }//fin for
+
+?>
